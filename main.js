@@ -1,31 +1,38 @@
-$imgs = $('.sliders>img')
-$menu = $('.menu>li')
-$sliders = $('.sliders')
-$menu.first().addClass('active')
+init()
+var n = 0
 
-timer = setTimer()
-
-$sliders.on('mouseleave',()=>{
+$sliders.on('mouseleave', () => {
     timer = setTimer()
-    console.log('leave')
 })
 
-$sliders.on('mouseenter',()=>{
+$sliders.on('mouseenter', () => {
     clearInterval(timer)
-    console.log('clear')
 })
 
 
 $menu.on('click', function (e) {
     $(e.currentTarget).addClass('active').siblings().removeClass('active')
-    current = $(e.currentTarget).index()
+    var current = $(e.currentTarget).index()
     gotoPic(current)
     n = current
-    console.log(current)
 })
 
+document.addEventListener('visibilitychange', function (e) {
+    if (document.hidden) {
+        clearInterval(timer)
+    } else {
+        timer = setTimer()
+    }
+})
 
-var n = 0
+function init() {
+    $imgs = $('.sliders>img')
+    $menu = $('.menu>li')
+    $sliders = $('.sliders')
+    $menu.first().addClass('active')
+
+    timer = setTimer()
+}
 
 function setTimer() {
     return setInterval(function () {
